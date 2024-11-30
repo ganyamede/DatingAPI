@@ -1,4 +1,4 @@
-![telegram-cloud-photo-size-2-5357177841936100860-y](https://github.com/user-attachments/assets/b211bacc-f94f-4ce0-aa87-98b9aa52d632)# DatingAPI
+# DatingAPI
 
 Проект **Dating API** представляет собой backend для платформы знакомств, построенный с использованием **Flask**, **SQLAlchemy**, **JWT** и **Redis**. Этот проект включает в себя RESTful API для аутентификации пользователей, управления профилями, сообщениями и лайками, а также интеграцию с **Swagger UI** для удобного тестирования и документации.
 
@@ -45,7 +45,7 @@
 6. Детальное описание проекта, документация
 
    ### Везде необходимо использовать JWT ACCESS TOKEN
-   ### Kроме блока Authentication и Utility в документации на фото ниже
+   ### Kроме блока Authorization и Utility в документации на фото ниже
 
    # Utility
    ![telegram-cloud-photo-size-2-5357177841936100849-y](https://github.com/user-attachments/assets/8fa4ae21-516b-4898-82d5-97c9978d3576)
@@ -53,7 +53,7 @@
    - Получение всех городов страны
    - Работает с одной страной, возможно расширение
 
-   # Authentication
+   # Authorization
      ## Register
      ![telegram-cloud-photo-size-2-5357177841936100856-y](https://github.com/user-attachments/assets/cf716d3c-c07a-4635-bbd3-f8101769a347)
 
