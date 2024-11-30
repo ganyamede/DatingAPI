@@ -243,6 +243,10 @@ class SkipProfile(Resource):
                 
             return {'ok': False, 'error': 'Record not found'}, 201
 
+        return {'ok': True, 'state': True}, 200
+
+    
+
 class ReadAllLikes(Resource):
     @jwt_required()
     def post(self):
