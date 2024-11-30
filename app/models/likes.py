@@ -240,7 +240,8 @@ class SkipProfile(Resource):
                 db.session.delete(likes)
                 db.session.commit()
                 return {'ok': True, 'state': True}, 200
-            return {'ok': False, 'error': 'Record not found'}, 400
+                
+            return {'ok': False, 'error': 'Record not found'}, 201
 
 class ReadAllLikes(Resource):
     @jwt_required()
@@ -323,7 +324,7 @@ class ReadAllLikes(Resource):
         ).first()
 
         if not likes:
-            return {'ok': True, 'state': False, 'message': 'No likes'}
+            return {'ok': True, 'state': False, 'message': 'No likes'}, 201
 
         peo_profile = Profiles.query.filter_by(user_id=likes.liker_id).first()
         distance, array_img = (
@@ -339,7 +340,7 @@ class ReadAllLikes(Resource):
             'age': peo_profile.age, 'description': peo_profile.description, 'img': array_img,
             'me_id': me_u.id, 'peo_id': likes.liker_id, 'liked_timestamp': str(likes.liked_timestamp),
             'liked_id': likes.id, 'liked_message': likes.liked_message
-        }
+        }, 200
 
 class SearchProfile(Resource):
     @jwt_required()
@@ -409,31 +410,30 @@ class SearchProfile(Resource):
         me_profile = Profiles.query.filter_by(user_id=me_u.id).first()
 
         if not me_profile:
-            return {'ok': True, 'state': False, 'error': 'No profile found for the user'}
+            return {'ok': True, 'state': False, 'error': 'No profile found for the user'}, 201
 
-        my_search_sex = 2  # You might want to dynamically set this based on request
         my_geo = get_coordinates(me_profile.city)
 
-        # Querying for profiles based on age and sex criteria
         peo_profiles = Profiles.query.filter(
             (Profiles.age >= (me_profile.age - 4)) &
             (Profiles.age <= (me_profile.age + 4)) &
-            (Profiles.sex == 3)  # Assuming you want opposite sex (3 for women in this case)
+            (Profiles.sex == me_profile.search_sex) 
         ).all()
 
-        # Iterate through profiles to find the first matching one
         for peo_profile in peo_profiles:
             if not check_value_in_set(f'id:{me_u.id}', peo_profile.id):
                 distance = calculate_distance(my_geo[0], my_geo[1], *get_coordinates(peo_profile.city))
-                array_img = [
-                    base64.b64encode(img.photo).decode('utf-8')
-                    for img in Image.query.filter_by(profile_id=peo_profile.id).all()
-                ]
+                if calculate_distance(my_geo[0], my_geo[1], *get_coordinates(peo_profile.city)) <= 30:
+                    array_img = [
+                        base64.b64encode(img.photo).decode('utf-8')
+                        for img in Image.query.filter_by(profile_id=peo_profile.id).all()
+                    ]
+                    break
+                    
                 return {
                     'ok': True, 'state': True, 'distance': distance, 'name': peo_profile.name,
                     'city': peo_profile.city, 'age': peo_profile.age, 'description': peo_profile.description,
                     'img': array_img, 'me_id': me_u.id, 'peo_id': peo_profile.id
-                }
+                }, 200
 
-        # If no matching profiles are found
-        return {'ok': True, 'state': False, 'error': 'No matching profiles found'}
+        return {'ok': True, 'state': False, 'error': 'No matching profiles found'}, 201
