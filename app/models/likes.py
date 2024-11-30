@@ -233,6 +233,8 @@ class SkipProfile(Resource):
         """
         from app.database import Likes, db
 
+
+
         if 'liked_id' in request.form:
             likes = Likes.query.filter_by(id=request.form['liked_id']).first()
 
