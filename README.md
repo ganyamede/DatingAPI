@@ -1,2 +1,12 @@
 # DatingAPI
-"Dating" is an online dating backend on Flask using SQLAlchemy, JWT and Redis. The project includes a RESTful API for user authentication, profile management, messages and likes, as well as integration with Swagger UI for easy testing and documentation.
+
+"Dating" — это backend для онлайн-знакомств на Flask, использующий SQLAlchemy, JWT и Redis. Проект включает в себя RESTful API для аутентификации пользователей, управления профилями, сообщениями и лайками, а также интеграцию с Swagger UI для удобного тестирования и документации.
+
+JWT для безопасной аутентификации и управления сессиями.
+SQLAlchemy для работы с базой данных, хранящей информацию о пользователях, сообщениях и лайках.
+Redis для кеширования и улучшения производительности.
+Flask — легковесный фреймворк для разработки REST API.
+Swagger UI для интерактивной документации и тестирования API.
+Проект предлагает надежную, масштабируемую и безопасную платформу для знакомств с высокой производительностью и удобной документацией.
+
+
