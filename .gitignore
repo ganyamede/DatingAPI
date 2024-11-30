@@ -1,0 +1,8 @@
+.idea
+.venv
+.gitignore
+table_export.csv
+test.py
+test2.py
+app.zip
+test3.py
