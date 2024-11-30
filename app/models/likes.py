@@ -177,7 +177,6 @@ class LikeProfile(Resource):
 
         me_u = Users.query.filter_by(gmail=get_jwt_identity()).first()
 
-
         if 'liked_id' in request.form:
             likes = Likes.query.filter_by(id=request.form['liked_id']).first()
             likes.liked_id = True
@@ -232,10 +231,9 @@ class SkipProfile(Resource):
                   type: string
                   example: "Record not found"
         """
-        from app.database import Likes, db, add_to_set, Users
+        from app.database import Likes, db
 
-        me_u = Users.query.filter_by(gmail=get_jwt_identity()).first()
-        add_to_set(f'id:{me_u.id}', request.form['peo_id'])
+
 
         if 'liked_id' in request.form:
             likes = Likes.query.filter_by(id=request.form['liked_id']).first()
@@ -245,8 +243,6 @@ class SkipProfile(Resource):
                 db.session.commit()
                 return {'ok': True, 'state': True}, 200
             return {'ok': False, 'error': 'Record not found'}, 400
-
-        return {'ok': True, 'state': True}, 200
 
 class ReadAllLikes(Resource):
     @jwt_required()
